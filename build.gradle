@@ -1,0 +1,38 @@
+/**
+ * Top-level build file where you can add configuration options common to all sub-projects/modules.
+ * @author Thomas Sunderland, 2021 MAY 09
+ */
+buildscript {
+
+    repositories {
+        // google's maven repository
+        google()
+
+        // maven central: https://search.maven.org/
+        mavenCentral()
+    }
+
+    dependencies {
+        // Android Studio Gradle Plugin
+        classpath "com.android.tools.build:gradle:4.2.0"
+
+        // Android Studio Kotlin Gradle Plugin
+        //noinspection DifferentKotlinGradleVersion
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:1.5.0"
+    }
+}
+
+allprojects {
+    repositories {
+        // google's maven repository
+        google()
+
+        // maven central: https://search.maven.org/
+        mavenCentral()
+    }
+}
+
+// note: ensures that the build directory is deleted when running the gradle clean task
+task clean(type: Delete) {
+    delete rootProject.buildDir
+}
