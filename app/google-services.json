@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "565857879344",
+    "project_id": "nike-assessment-application",
+    "storage_bucket": "nike-assessment-application.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:565857879344:android:25264d0116b206bd3c34f5",
+        "android_client_info": {
+          "package_name": "com.nike.snkrs.sunderland"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "565857879344-k49q392i0jdtbuneagn8gdnh8stp3dim.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBomqZKU2_e3k-8QcovgvAM0RJXdZ7mhGg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "565857879344-k49q392i0jdtbuneagn8gdnh8stp3dim.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

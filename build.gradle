@@ -14,11 +14,22 @@ buildscript {
 
     dependencies {
         // Android Studio Gradle Plugin
-        classpath "com.android.tools.build:gradle:4.2.0"
+        classpath "com.android.tools.build:gradle:4.2.1"
 
         // Android Studio Kotlin Gradle Plugin
         //noinspection DifferentKotlinGradleVersion
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:1.5.0"
+
+        // AndroidX Navigation Component - SafeArgs Plugin
+        // Ref: https://developer.android.com/guide/navigation/navigation-getting-started#ensure_type-safety_by_using_safe_args
+        classpath "androidx.navigation:navigation-safe-args-gradle-plugin:2.3.5"
+
+        // Google Services
+        // Note: Required by Firebase
+        classpath "com.google.gms:google-services:4.3.8"
+
+        // Firebase Crashlytics Plugin
+        classpath "com.google.firebase:firebase-crashlytics-gradle:2.6.1"
     }
 }
 

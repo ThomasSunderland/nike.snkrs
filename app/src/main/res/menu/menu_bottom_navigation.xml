@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <!-- SNEAKERS -->
+    <item
+        android:id="@+id/fragmentSneakers"
+        android:icon="@drawable/bottom_navigation_sneakers_icon"
+        android:title="@string/bottom_navigation_button_sneakers"
+        app:showAsAction="always"
+        tools:ignore="AlwaysShowAction" />
+
+    <!-- ATHLETES -->
+    <item
+        android:id="@+id/fragmentAthletes"
+        android:icon="@drawable/bottom_navigation_athletes_icon"
+        android:title="@string/bottom_navigation_button_athletes"
+        app:showAsAction="always"
+        tools:ignore="AlwaysShowAction" />
+
+    <!-- APPAREL -->
+    <item
+        android:id="@+id/fragmentApparel"
+        android:icon="@drawable/bottom_navigation_apparel_icon"
+        android:title="@string/bottom_navigation_button_apparel"
+        app:showAsAction="always"
+        tools:ignore="AlwaysShowAction" />
+</menu>

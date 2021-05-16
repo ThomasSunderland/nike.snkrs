@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".ui.view.FragmentApparel">
+
+    <!-- data binding -->
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.nike.snkrs.sunderland.ui.viewmodel.ViewModelApparel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/main"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/nike_white">
+
+        <FrameLayout
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <!-- background shimmer effect -->
+            <com.facebook.shimmer.ShimmerFrameLayout
+                android:id="@+id/shimmer_view_container"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:shimmer_auto_start="true"
+                app:shimmer_repeat_count="2"
+                app:shimmer_repeat_mode="reverse">
+
+                <!-- background -->
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:contentDescription="@string/undefined"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/background04" />
+            </com.facebook.shimmer.ShimmerFrameLayout>
+
+            <!-- background -->
+            <ImageView
+                android:id="@+id/background"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:alpha="0.0"
+                android:contentDescription="@string/undefined"
+                android:scaleType="fitXY"
+                android:src="@drawable/background04" />
+        </FrameLayout>
+
+        <!-- background effect -->
+        <!-- note: floating ghost of nike logo -->
+        <com.flaviofaria.kenburnsview.KenBurnsView
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:alpha=".4"
+            android:src="@drawable/nike_background"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <!-- view pager -->
+        <androidx.viewpager2.widget.ViewPager2
+            android:id="@+id/foregroundViewPager"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:paddingStart="@dimen/general_view_pager_paddingStartEnd"
+            android:paddingTop="@dimen/general_view_pager_paddingTopBottom"
+            android:paddingEnd="@dimen/general_view_pager_paddingStartEnd"
+            android:paddingBottom="@dimen/general_view_pager_paddingTopBottom"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

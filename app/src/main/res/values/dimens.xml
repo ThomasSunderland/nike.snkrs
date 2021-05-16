@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools">
+
+    <!-- general card-related dimensions -->
+    <dimen name="card_corner_radius">12dp</dimen>
+    <dimen name="card_elevation">4dp</dimen>
+    <dimen name="card_padding">12dp</dimen>
+
+    <!-- bottom navigation dimensions -->
+    <dimen name="bottom_navigation_text_size">14sp</dimen>
+    <dimen name="bottom_navigation_active_text_size">14sp</dimen>
+    <dimen name="design_bottom_navigation_item_max_width" tools:override="true">600dp</dimen>
+    <dimen name="design_bottom_navigation_active_item_max_width" tools:override="true">600dp</dimen>
+
+    <!-- general dimensions -->
+    <dimen name="general_view_pager_paddingTopBottom">5dp</dimen>
+    <dimen name="general_view_pager_paddingStartEnd">5dp</dimen>
+    <dimen name="general_view_pager_page_margin">10dp</dimen>
+    <dimen name="general_view_pager_page_offset">10dp</dimen>
+    <dimen name="general_view_pager_multiplier" tools:ignore="PxUsage">7.5px</dimen>
+
+    <!-- sneakers screen dimensions -->
+
+    <!-- athletes screen dimensions -->
+
+    <!-- apparel screen dimensions -->
+
+    <!-- about screen dimensions -->
+    <dimen name="about_screen_margin_start_end">16dp</dimen>
+    <dimen name="about_screen_margin_top_bottom">16dp</dimen>
+    <dimen name="about_screen_margin_between_views">8dp</dimen>
+    <dimen name="about_screen_header_height">8dp</dimen>
+    <dimen name="about_screen_footer_height">32dp</dimen>
+    <dimen name="about_screen_avatar_width">132dp</dimen>
+    <dimen name="about_screen_avatar_height">140dp</dimen>
+    <dimen name="about_screen_name_text_size">24sp</dimen>
+    <dimen name="about_screen_profession_text_size">18sp</dimen>
+    <dimen name="about_screen_skills_text_size">10sp</dimen>
+    <dimen name="about_screen_footer_elements_text_size">12sp</dimen>
+
+</resources>

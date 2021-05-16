@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <!-- menu item - linkedin -->
+    <item
+        android:id="@+id/action_linkedin"
+        android:icon="@drawable/ic_linkedin_white_24dp"
+        android:title="@string/menu_item_linkedin"
+        app:showAsAction="always"
+        tools:ignore="AlwaysShowAction" />
+
+    <!-- menu item - stack overflow -->
+    <item
+        android:id="@+id/action_stack_overflow"
+        android:icon="@drawable/ic_stack_overflow_white_24dp"
+        android:title="@string/menu_item_stack_overflow"
+        app:showAsAction="always"
+        tools:ignore="AlwaysShowAction" />
+
+    <!-- menu item - medium -->
+    <item
+        android:id="@+id/action_medium"
+        android:icon="@drawable/medium"
+        android:title="@string/menu_item_medium"
+        app:showAsAction="always"
+        tools:ignore="AlwaysShowAction" />
+
+    <!-- menu item - about -->
+    <item
+        android:id="@+id/action_about"
+        android:icon="@drawable/menu_about"
+        android:title="@string/menu_item_about"
+        app:showAsAction="never" />
+</menu>

@@ -1,3 +1,30 @@
 <resources>
-    <string name="app_name">Sunderland Coding Assessment</string>
+    <!-- common -->
+    <string name="app_name" translatable="false">Sunderland</string>
+    <string name="developer_name" translatable="false">Thomas Sunderland</string>
+    <string name="profession">Android Developer</string>
+    <string name="email_address" translatable="false">tsunderland77@gmail.com</string>
+    <string name="contact_number" translatable="false">240.299.7133</string>
+    <string name="undefined">Undefined</string>
+
+    <!-- toolbar -->
+    <string name="menu_item_linkedin">LinkedIn</string>
+    <string name="menu_item_stack_overflow">Stack Overflow</string>
+    <string name="menu_item_medium">Medium</string>
+    <string name="menu_item_about">About</string>
+    <string name="menu_item_web_view">Browser</string>
+
+    <!-- bottom navigation button titles -->
+    <string name="bottom_navigation_button_sneakers">Sneakers</string>
+    <string name="bottom_navigation_button_athletes">Athletes</string>
+    <string name="bottom_navigation_button_apparel">Apparel</string>
+
+    <!-- professional links -->
+    <string name="professional_link_default" translatable="false">https://www.nike.com</string>
+    <string name="professional_link_linkedin" translatable="false">https://www.linkedin.com/in/thomas-sunderland/</string>
+    <string name="professional_link_stackoverflow" translatable="false">https://stackoverflow.com/users/4739877/thomas-sunderland</string>
+    <string name="professional_link_medium" translatable="false">https://medium.com/@tsunderland77</string>
+
+    <!-- general card -->
+    <string name="general_card_resource_source">Source:</string>
 </resources>

@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/navigation_graph"
+    app:startDestination="@id/fragmentSplashScreen">
+
+    <!-- fragment - splash screen -->
+    <fragment
+        android:id="@+id/fragmentSplashScreen"
+        android:name="com.nike.snkrs.sunderland.ui.view.FragmentSplashScreen"
+        android:label="fragment_splash"
+        tools:layout="@layout/fragment_splash">
+
+        <!-- splash screen -> sneakers action -->
+        <!-- note: popUpTo/popUpToInclusive is used here to prevent the user from going back to the splash screen -->
+        <action
+            android:id="@+id/action_fragmentSplashScreen_to_fragmentSneakers"
+            app:destination="@id/fragmentSneakers"
+            app:popUpTo="@id/fragmentSplashScreen"
+            app:popUpToInclusive="true" />
+    </fragment>
+
+    <!-- fragment - sneakers -->
+    <fragment
+        android:id="@+id/fragmentSneakers"
+        android:name="com.nike.snkrs.sunderland.ui.view.FragmentSneakers"
+        android:label="@string/bottom_navigation_button_sneakers"
+        tools:layout="@layout/fragment_sneakers" />
+
+    <!-- fragment - athletes -->
+    <fragment
+        android:id="@+id/fragmentAthletes"
+        android:name="com.nike.snkrs.sunderland.ui.view.FragmentAthletes"
+        android:label="@string/bottom_navigation_button_athletes"
+        tools:layout="@layout/fragment_athletes" />
+
+    <!-- fragment - apparel -->
+    <fragment
+        android:id="@+id/fragmentApparel"
+        android:name="com.nike.snkrs.sunderland.ui.view.FragmentApparel"
+        android:label="@string/bottom_navigation_button_apparel"
+        tools:layout="@layout/fragment_apparel" />
+
+    <!-- fragment - about -->
+    <fragment
+        android:id="@+id/fragmentAbout"
+        android:name="com.nike.snkrs.sunderland.ui.view.FragmentAbout"
+        android:label="@string/menu_item_about"
+        tools:layout="@layout/fragment_about" />
+
+    <!-- global action for the About screen -->
+    <action android:id="@+id/action_fragmentAbout"
+        app:destination="@id/fragmentAbout" />
+
+    <!-- fragment - web view -->
+    <fragment
+        android:id="@+id/fragmentWebView"
+        android:name="com.nike.snkrs.sunderland.ui.view.FragmentWebView"
+        android:label="@string/menu_item_web_view"
+        tools:layout="@layout/fragment_web_view">
+
+        <!-- used to pass in the target url to load into the web view -->
+        <argument
+            android:name="targetUrl"
+            app:argType="string"
+            android:defaultValue="" />
+    </fragment>
+
+    <!-- global action for the WebView screen -->
+    <action android:id="@+id/action_fragmentWebView"
+        app:destination="@id/fragmentWebView" />
+</navigation>

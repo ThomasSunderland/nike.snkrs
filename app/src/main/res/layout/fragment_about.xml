@@ -1,0 +1,248 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".ui.view.FragmentAbout">
+
+    <!-- data binding -->
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.nike.snkrs.sunderland.ui.viewmodel.ViewModelAbout" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/nike_white">
+
+        <!-- header line   -->
+        <View
+            android:id="@+id/header_line"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/about_screen_header_height"
+            android:layout_marginStart="@dimen/about_screen_margin_start_end"
+            android:layout_marginTop="@dimen/about_screen_margin_top_bottom"
+            android:layout_marginEnd="@dimen/about_screen_margin_start_end"
+            android:background="@color/android_green"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <!-- business card - top -->
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/card_top"
+            style="@style/CardViewStyleTopRounded"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/about_screen_margin_start_end"
+            android:layout_marginTop="@dimen/about_screen_margin_top_bottom"
+            android:layout_marginEnd="@dimen/about_screen_margin_start_end"
+            app:cardBackgroundColor="@color/nike_black"
+            app:cardElevation="@dimen/card_elevation"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/header_line">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@android:color/transparent">
+
+                <!-- sunderland avatar -->
+                <ImageView
+                    android:id="@+id/avatar"
+                    android:layout_width="@dimen/about_screen_avatar_width"
+                    android:layout_height="@dimen/about_screen_avatar_height"
+                    android:layout_marginStart="-12dp"
+                    android:layout_marginTop="-12dp"
+                    android:background="@android:color/transparent"
+                    android:contentDescription="@string/undefined"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/sunderland" />
+
+                <!-- name, profession, professional links -->
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:layout_weight="1"
+                    android:background="@android:color/transparent"
+                    android:orientation="vertical">
+
+                    <!-- name -->
+                    <TextView
+                        android:id="@+id/first_name"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@android:color/transparent"
+                        android:gravity="center"
+                        android:text="@string/developer_name"
+                        android:textColor="@color/nike_white"
+                        android:textSize="@dimen/about_screen_name_text_size"
+                        android:textStyle="bold" />
+
+                    <!-- profession -->
+                    <TextView
+                        android:id="@+id/profession"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/about_screen_margin_between_views"
+                        android:background="@android:color/transparent"
+                        android:gravity="center"
+                        android:text="@string/profession"
+                        android:textColor="@color/android_green"
+                        android:textSize="@dimen/about_screen_profession_text_size"
+                        android:textStyle="bold" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_marginBottom="4dp"
+                        android:layout_weight="1"
+                        android:background="@android:color/transparent"
+                        android:gravity="bottom|center_horizontal"
+                        tools:ignore="NestedWeights">
+
+                        <!-- linkedIn -->
+                        <ImageView
+                            android:id="@+id/linkedin"
+                            android:layout_width="32dp"
+                            android:layout_height="32dp"
+                            android:layout_marginEnd="24dp"
+                            android:background="@android:color/transparent"
+                            android:clickable="true"
+                            android:contentDescription="@string/undefined"
+                            android:focusable="true"
+                            android:foreground="?android:attr/selectableItemBackground"
+                            android:scaleType="fitXY"
+                            android:src="@drawable/about_linkedin"
+                            tools:ignore="UnusedAttribute"
+                            tools:targetApi="m" />
+
+                        <ImageView
+                            android:id="@+id/stackoverflow"
+                            android:layout_width="32dp"
+                            android:layout_height="32dp"
+                            android:layout_marginEnd="24dp"
+                            android:background="@android:color/transparent"
+                            android:clickable="true"
+                            android:contentDescription="@string/undefined"
+                            android:focusable="true"
+                            android:foreground="?android:attr/selectableItemBackground"
+                            android:scaleType="fitXY"
+                            android:src="@drawable/about_stackoverflow"
+                            tools:ignore="UnusedAttribute"
+                            tools:targetApi="m" />
+
+                        <ImageView
+                            android:id="@+id/medium"
+                            android:layout_width="32dp"
+                            android:layout_height="32dp"
+                            android:background="@android:color/transparent"
+                            android:clickable="true"
+                            android:contentDescription="@string/undefined"
+                            android:focusable="true"
+                            android:foreground="?android:attr/selectableItemBackground"
+                            android:scaleType="fitXY"
+                            android:src="@drawable/about_medium"
+                            tools:ignore="UnusedAttribute"
+                            tools:targetApi="m" />
+                    </LinearLayout>
+                </LinearLayout>
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <FrameLayout
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginStart="@dimen/about_screen_margin_start_end"
+            android:layout_marginEnd="@dimen/about_screen_margin_start_end"
+            android:background="@android:color/transparent"
+            app:layout_constraintBottom_toTopOf="@id/card_bottom"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/card_top">
+
+            <!-- resume -->
+            <ImageView
+                android:id="@+id/resume"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@android:color/transparent"
+                android:contentDescription="@string/undefined"
+                android:scaleType="fitXY"
+                android:src="@drawable/resume" />
+
+            <!-- animated hire me graphic :) -->
+            <com.airbnb.lottie.LottieAnimationView
+                android:id="@+id/animation"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:background="@android:color/transparent"
+                app:lottie_autoPlay="true"
+                app:lottie_fileName="hire_me.json"
+                app:lottie_loop="false"
+                tools:visibility="gone" />
+        </FrameLayout>
+
+        <!-- business card - bottom -->
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/card_bottom"
+            style="@style/CardViewStyleBottomRounded"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/about_screen_margin_start_end"
+            android:layout_marginEnd="@dimen/about_screen_margin_start_end"
+            android:layout_marginBottom="@dimen/about_screen_margin_top_bottom"
+            app:cardBackgroundColor="@color/nike_black"
+            app:cardElevation="@dimen/card_elevation"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@android:color/transparent"
+                android:padding="8dp">
+
+                <!-- email address -->
+                <TextView
+                    android:id="@+id/email_address"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@android:color/transparent"
+                    android:gravity="center"
+                    android:text="@string/email_address"
+                    android:textColor="@color/nike_white"
+                    android:textSize="@dimen/about_screen_footer_elements_text_size"
+                    android:textStyle="bold" />
+
+                <View
+                    android:layout_width="2dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:background="@color/android_green" />
+
+                <!-- contact number -->
+                <TextView
+                    android:id="@+id/contact_number"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@android:color/transparent"
+                    android:gravity="center"
+                    android:text="@string/contact_number"
+                    android:textColor="@color/nike_white"
+                    android:textSize="@dimen/about_screen_footer_elements_text_size"
+                    android:textStyle="bold" />
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
