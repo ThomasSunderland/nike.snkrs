@@ -19,6 +19,7 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
 import com.nike.snkrs.sunderland.R
 import com.nike.snkrs.sunderland.databinding.FragmentApparelBinding
@@ -129,7 +130,26 @@ class FragmentApparel : Fragment(), CoroutineScope {
         tryCatchWithLogging({
             with (binding.foregroundViewPager) {
                 // initialize the adapter with an empty data set
-                adapter = AdapterGeneral(mutableListOf(), viewModel)
+                adapter = AdapterData(viewModel).apply {
+                    registerAdapterDataObserver(object : RecyclerView.AdapterDataObserver() {
+                        override fun onItemRangeInserted(positionStart: Int, itemCount: Int) {
+                            tryCatch {
+                                if (currentList.isNotEmpty()) {
+                                    if (viewModel.firstTimeThrough.value == true) {
+                                        // update current item to be at the middle of the current collection of items
+                                        viewModel.firstTimeThrough.value = false
+                                        setCurrentItem(getItemCount() / 2, false)
+                                    } else {
+                                        // ensure that we present the last item viewed
+                                        setCurrentItem(viewModel.currentPosition.value ?: 0, false)
+                                    }
+                                }
+                            }
+                        }
+                    })
+                }
+
+                // keep 1 page in memory on each side of the current page
                 offscreenPageLimit = 1
 
                 // set up carousel effect
@@ -151,21 +171,8 @@ class FragmentApparel : Fragment(), CoroutineScope {
                 // observe apparel data changes
                 viewLifecycleOwner.lifecycleScope.launch {
                     viewLifecycleOwner.lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
-                        viewModel.apparel.collectLatest { apparel ->
-                            if (viewModel.firstTimeThrough.value == true && apparel.isNotEmpty()) {
-                                // transform the received data to a representation understood by our adapter
-                                (adapter as AdapterGeneral).addAll(apparel.map { AdapterGeneralItem(it.uid, it.resource, it.source) })
-
-                                // update current item to be at the middle of the current collection of items
-                                viewModel.firstTimeThrough.value = false
-                                setCurrentItem((adapter as AdapterGeneral).itemCount / 2, false)
-                            } else {
-                                // transform the received data to a representation understood by our adapter
-                                (adapter as AdapterGeneral).addAll(apparel.map { AdapterGeneralItem(it.uid, it.resource, it.source) })
-
-                                // ensure that we present the last item viewed
-                                setCurrentItem(viewModel.currentPosition.value ?: 0, false)
-                            }
+                        viewModel.apparel.collectLatest { apparelData ->
+                            (adapter as AdapterData).submitList(apparelData.map { AdapterDataItem(it.uid, it.resource, it.source) })
                         }
                     }
                 }

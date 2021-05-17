@@ -12,7 +12,7 @@ package com.nike.snkrs.sunderland.ui.viewmodel
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.nike.snkrs.sunderland.ui.view.callbacks.AdapterGeneralCallback
+import com.nike.snkrs.sunderland.ui.view.callbacks.AdapterDataCallback
 
 //endregion import directives
 
@@ -21,7 +21,7 @@ import com.nike.snkrs.sunderland.ui.view.callbacks.AdapterGeneralCallback
  * Abstract ViewModel
  * @author Thomas Sunderland. 2021 MAY 13
  */
-abstract class ViewModelBase : ViewModel(), AdapterGeneralCallback {
+abstract class ViewModelBase : ViewModel(), AdapterDataCallback {
 
     //region properties
 

@@ -11,7 +11,7 @@ package com.nike.snkrs.sunderland.ui.view.callbacks
  * Used to display an Apparel item
  * @author Thomas Sunderland. 2021 MAY 12
  */
-interface AdapterGeneralCallback {
+interface AdapterDataCallback {
 
     /**
      * Click event callback for the featured image

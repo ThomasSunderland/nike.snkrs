@@ -19,6 +19,7 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
 import com.nike.snkrs.sunderland.R
 import com.nike.snkrs.sunderland.databinding.FragmentSneakersBinding
@@ -129,7 +130,26 @@ class FragmentSneakers : Fragment(), CoroutineScope {
         tryCatchWithLogging({
             with (binding.foregroundViewPager) {
                 // initialize the adapter with an empty data set
-                adapter = AdapterGeneral(mutableListOf(), viewModel)
+                adapter = AdapterData(viewModel).apply {
+                    registerAdapterDataObserver(object : RecyclerView.AdapterDataObserver() {
+                        override fun onItemRangeInserted(positionStart: Int, itemCount: Int) {
+                            tryCatch {
+                                if (currentList.isNotEmpty()) {
+                                    if (viewModel.firstTimeThrough.value == true) {
+                                        // update current item to be at the middle of the current collection of items
+                                        viewModel.firstTimeThrough.value = false
+                                        setCurrentItem(getItemCount() / 2, false)
+                                    } else {
+                                        // ensure that we present the last item viewed
+                                        setCurrentItem(viewModel.currentPosition.value ?: 0, false)
+                                    }
+                                }
+                            }
+                        }
+                    })
+                }
+
+                // keep 1 page in memory on each side of the current page
                 offscreenPageLimit = 1
 
                 // set up carousel effect
@@ -141,7 +161,7 @@ class FragmentSneakers : Fragment(), CoroutineScope {
                     page.translationX = position * -(resources.getDimension(R.dimen.general_view_pager_multiplier) * pageOffset + pageMargin)
                 }
 
-                // update view model as page changes so that if we go back to this fragment the last page can be restored
+                // update view model as page changes so that if we leave and come back to this fragment the last page can be restored
                 registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
                     override fun onPageSelected(position: Int) {
                         viewModel.currentPosition.value = position
@@ -152,20 +172,7 @@ class FragmentSneakers : Fragment(), CoroutineScope {
                 viewLifecycleOwner.lifecycleScope.launch {
                     viewLifecycleOwner.lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
                         viewModel.sneakers.collectLatest { sneakersData ->
-                            if (viewModel.firstTimeThrough.value == true && sneakersData.isNotEmpty()) {
-                                // transform the received data to a representation understood by our adapter
-                                (adapter as AdapterGeneral).addAll(sneakersData.map { AdapterGeneralItem(it.uid, it.resource, it.source) })
-
-                                // update current item to be at the middle of the current collection of items
-                                viewModel.firstTimeThrough.value = false
-                                setCurrentItem((adapter as AdapterGeneral).itemCount / 2, false)
-                            } else {
-                                // transform the received data to a representation understood by our adapter
-                                (adapter as AdapterGeneral).addAll(sneakersData.map { AdapterGeneralItem(it.uid, it.resource, it.source) })
-
-                                // ensure that we present the last item viewed
-                                setCurrentItem(viewModel.currentPosition.value ?: 0, false)
-                            }
+                            (adapter as AdapterData).submitList(sneakersData.map { AdapterDataItem(it.uid, it.resource, it.source) })
                         }
                     }
                 }
@@ -173,5 +180,5 @@ class FragmentSneakers : Fragment(), CoroutineScope {
         })
         //@formatter:on
     }
-//endregion private methods
+    //endregion private methods
 }

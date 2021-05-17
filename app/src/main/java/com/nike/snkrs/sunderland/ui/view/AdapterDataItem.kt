@@ -8,10 +8,10 @@
 package com.nike.snkrs.sunderland.ui.view
 
 /**
- * Encapsulates the data used for display by our AdapterGeneral class
+ * Encapsulates the data used for display by our AdapterData class
  * @author Thomas Sunderland. 2021 MAY 14
  */
-data class AdapterGeneralItem(
+data class AdapterDataItem(
     /**
      * Unique identifier
      */
