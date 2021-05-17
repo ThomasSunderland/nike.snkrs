@@ -10,9 +10,11 @@ package com.nike.snkrs.sunderland.ui.viewmodel
 
 //region import directives
 
-import androidx.lifecycle.asLiveData
+import androidx.lifecycle.viewModelScope
 import com.nike.snkrs.sunderland.ui.model.ModelSneakers
 import com.nike.snkrs.sunderland.util.tryCatchWithLogging
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.stateIn
 
 //endregion import directives
 
@@ -28,7 +30,7 @@ class ViewModelSneakers : ViewModelBase() {
     /**
      * Reference to our data model which acts as our repository
      */
-    private val model by lazy { ModelSneakers() }
+    private val model by lazy { ModelSneakers.instance }
     //endregion data members
 
 
@@ -36,8 +38,13 @@ class ViewModelSneakers : ViewModelBase() {
 
     /**
      * Collection of observable sneakers data
+     * Note: 5000ms recommendation is from Google to handle screen rotations, etc.
      */
-    val sneakers = model.sneakers.asLiveData()
+    val sneakers = model.sneakers.stateIn(
+        scope = viewModelScope,
+        started = SharingStarted.WhileSubscribed(5000),
+        initialValue = listOf()
+    )
     //endregion properties
 
 

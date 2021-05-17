@@ -15,7 +15,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.viewpager2.widget.ViewPager2
 import com.nike.snkrs.sunderland.R
 import com.nike.snkrs.sunderland.databinding.FragmentSneakersBinding
@@ -25,6 +28,7 @@ import com.nike.snkrs.sunderland.util.tryCatchWithLogging
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 //endregion import directives
@@ -128,26 +132,6 @@ class FragmentSneakers : Fragment(), CoroutineScope {
                 adapter = AdapterGeneral(mutableListOf(), viewModel)
                 offscreenPageLimit = 1
 
-                // observe sneaker data changes
-                viewModel.sneakers.observe(viewLifecycleOwner) { sneakers ->
-                    sneakers?.let {
-                        if (viewModel.firstTimeThrough.value == true) {
-                            // transform the received data to a representation understood by our adapter
-                            (adapter as AdapterGeneral).addAll(sneakers.map { AdapterGeneralItem(it.uid, it.resource, it.source) })
-
-                            // update current item to be at the middle of the current collection of items
-                            viewModel.firstTimeThrough.value = false
-                            setCurrentItem((adapter as AdapterGeneral).itemCount / 2, false)
-                        } else {
-                            // transform the received data to a representation understood by our adapter
-                            (adapter as AdapterGeneral).addAll(sneakers.map { AdapterGeneralItem(it.uid, it.resource, it.source) })
-
-                            // ensure that we present the last item viewed
-                            setCurrentItem(viewModel.currentPosition.value ?: 0, false)
-                        }
-                    }
-                }
-
                 // set up carousel effect
                 setPageTransformer { page, position ->
                     val pageMargin = resources.getDimensionPixelOffset(R.dimen.general_view_pager_page_margin).toFloat()
@@ -163,6 +147,28 @@ class FragmentSneakers : Fragment(), CoroutineScope {
                         viewModel.currentPosition.value = position
                     }
                 })
+
+                // observe sneakers data changes
+                viewLifecycleOwner.lifecycleScope.launch {
+                    viewLifecycleOwner.lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                        viewModel.sneakers.collectLatest { sneakersData ->
+                            if (viewModel.firstTimeThrough.value == true && sneakersData.isNotEmpty()) {
+                                // transform the received data to a representation understood by our adapter
+                                (adapter as AdapterGeneral).addAll(sneakersData.map { AdapterGeneralItem(it.uid, it.resource, it.source) })
+
+                                // update current item to be at the middle of the current collection of items
+                                viewModel.firstTimeThrough.value = false
+                                setCurrentItem((adapter as AdapterGeneral).itemCount / 2, false)
+                            } else {
+                                // transform the received data to a representation understood by our adapter
+                                (adapter as AdapterGeneral).addAll(sneakersData.map { AdapterGeneralItem(it.uid, it.resource, it.source) })
+
+                                // ensure that we present the last item viewed
+                                setCurrentItem(viewModel.currentPosition.value ?: 0, false)
+                            }
+                        }
+                    }
+                }
             }
         })
         //@formatter:on

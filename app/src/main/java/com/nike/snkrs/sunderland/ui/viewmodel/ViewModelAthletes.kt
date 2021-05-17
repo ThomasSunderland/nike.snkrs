@@ -10,11 +10,11 @@ package com.nike.snkrs.sunderland.ui.viewmodel
 
 //region import directives
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.asLiveData
-import com.nike.snkrs.sunderland.data.local.entities.Athletes
+import androidx.lifecycle.viewModelScope
 import com.nike.snkrs.sunderland.ui.model.ModelAthletes
 import com.nike.snkrs.sunderland.util.tryCatchWithLogging
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.stateIn
 
 //endregion import directives
 
@@ -30,7 +30,7 @@ class ViewModelAthletes : ViewModelBase() {
     /**
      * Reference to our data model which acts as our repository
      */
-    private val model by lazy { ModelAthletes() }
+    private val model by lazy { ModelAthletes.instance }
     //endregion data members
 
 
@@ -38,8 +38,13 @@ class ViewModelAthletes : ViewModelBase() {
 
     /**
      * Collection of observable athletes data
+     * Note: 5000ms recommendation is from Google to handle screen rotations, etc.
      */
-    val athletes: LiveData<List<Athletes>> = model.athletes.asLiveData()
+    val athletes = model.athletes.stateIn(
+        scope = viewModelScope,
+        started = SharingStarted.WhileSubscribed(5000),
+        initialValue = listOf()
+    )
     //endregion properties
 
 

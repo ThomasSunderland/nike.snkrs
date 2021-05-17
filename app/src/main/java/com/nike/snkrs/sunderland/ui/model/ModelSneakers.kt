@@ -15,9 +15,8 @@ import com.nike.snkrs.sunderland.data.local.EntityDatabase
 import com.nike.snkrs.sunderland.data.local.entities.Sneakers
 import com.nike.snkrs.sunderland.data.remote.services.unsplash.UnsplashServiceHelper
 import com.nike.snkrs.sunderland.data.remote.services.unsplash.accessKey_config
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.combine
-import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.tasks.await
 
 //endregion import directives
@@ -27,7 +26,19 @@ import kotlinx.coroutines.tasks.await
  * Model for "sneakers" data, note: this is basically our "sneakers repository"
  * @author Thomas Sunderland. 2021 MAY 11
  */
-class ModelSneakers {
+class ModelSneakers private constructor() {
+
+    //region companion object
+
+    companion object {
+
+        /**
+         * Single instance of this class
+         */
+        val instance by lazy { ModelSneakers() }
+    }
+    //endregion companion object
+
 
     //region data members
 
@@ -49,17 +60,9 @@ class ModelSneakers {
         }.await()
 
         // next query the unsplash service
-        val searchResults = UnsplashServiceHelper.searchPhotos(accessKey, "nike%20sneakers")
-
-        // next transform the response from a collection of search result to a collection of Sneakers instances
-        val searchResultsAsSneakers = mutableListOf<Sneakers>()
-        searchResults.forEach { searchResult ->
-            searchResultsAsSneakers.add(Sneakers(resource = searchResult.urls.regular, source = searchResult.user.name))
-        }
-
-        // last, emit the results
-        emit(searchResultsAsSneakers)
-    }
+        emit(UnsplashServiceHelper.searchPhotos(accessKey, "nike%20sneakers"))
+    }.map { results -> results.map { result -> Sneakers(resource = result.urls.regular, source = result.user.name) }
+    }.flowOn(Dispatchers.IO)
     //@formatter:on
     //endregion data members
 
@@ -71,7 +74,7 @@ class ModelSneakers {
      */
     //@formatter:off
     val sneakers: Flow<List<Sneakers>>
-        get() = localData.combine(remoteData) { local, remote -> listOf(local, remote).flatten() }
+        get() = localData.combine(remoteData) { local, remote -> local + remote }
     //@formatter:on
     //endregion properties
 }
