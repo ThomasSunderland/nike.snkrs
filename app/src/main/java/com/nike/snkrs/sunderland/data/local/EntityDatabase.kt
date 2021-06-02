@@ -34,7 +34,7 @@ import com.nike.snkrs.sunderland.util.tryCatch
 @Database(
     entities = [Sneakers::class, Athletes::class, Apparel::class],
     exportSchema = false,
-    version = 1
+    version = 2
 )
 abstract class EntityDatabase : RoomDatabase() {
 
@@ -122,7 +122,9 @@ abstract class EntityDatabase : RoomDatabase() {
                             //@formatter:on
                         }
                     }
-                }).build()
+                })
+                .fallbackToDestructiveMigration()
+                .build()
         }
         //endregion private functions
 

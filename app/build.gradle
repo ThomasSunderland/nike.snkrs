@@ -27,10 +27,10 @@ android {
         targetSdkVersion 30
 
         // note: increment on each release
-        versionCode 1
+        versionCode 2
 
         // versioning scheme: major.year.month.hotfix
-        versionName "1.21.5.0"
+        versionName "1.21.6.0"
 
         // ui test runner
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
@@ -70,6 +70,11 @@ android {
     kotlinOptions {
         jvmTarget = "1.8"
     }
+
+    packagingOptions {
+        exclude "META-INF/AL2.0"
+        exclude "META-INF/LGPL2.1"
+    }
 }
 
 dependencies {
@@ -77,16 +82,18 @@ dependencies {
     // androidX
     // Ref: https://developer.android.com/jetpack/androidx
     // Ref: https://developer.android.com/jetpack/androidx/versions
-    implementation "androidx.core:core-ktx:1.3.2"
-    implementation "androidx.appcompat:appcompat:1.2.0"
+    implementation "androidx.core:core-ktx:1.5.0"
+    implementation "androidx.appcompat:appcompat:1.3.0"
     implementation "com.google.android.material:material:1.3.0"
     implementation "androidx.constraintlayout:constraintlayout:2.0.4"
-    implementation "androidx.fragment:fragment-ktx:1.3.3"
-    implementation "androidx.legacy:legacy-support-v4:1.0.0"
+    implementation "androidx.fragment:fragment-ktx:1.3.4"
+    debugImplementation "androidx.fragment:fragment-testing:1.3.4"
+    implementation "androidx.legacy:legacy-support-v4:1.0.0" // Ref: https://developer.android.com/guide/fragments/test
     implementation "androidx.lifecycle:lifecycle-runtime-ktx:2.4.0-alpha01"
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.3.1"
     implementation "androidx.navigation:navigation-fragment-ktx:2.3.5"
     implementation "androidx.navigation:navigation-ui-ktx:2.3.5"
+    androidTestImplementation "androidx.navigation:navigation-testing:2.3.5" // Ref: https://developer.android.com/guide/navigation/navigation-testing
     implementation "androidx.room:room-runtime:2.3.0"
     implementation "androidx.room:room-ktx:2.3.0"
     kapt "androidx.room:room-compiler:2.3.0"
@@ -109,7 +116,7 @@ dependencies {
 
     // gson (library to convert JSON to Java objects and vice-versa)
     // Ref: https://code.google.com/p/google-gson/
-    implementation "com.google.code.gson:gson:2.8.6"
+    implementation "com.google.code.gson:gson:2.8.7"
 
     // KenBurnsView
     // Ref: https://github.com/flavioarfaria/KenBurnsView
@@ -127,6 +134,8 @@ dependencies {
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.5.0"
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.5.0"
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-play-services:1.5.0"
+    testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:1.5.0"
+    androidTestImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:1.5.0"
 
     // lottie
     // Ref: https://github.com/airbnb/lottie-android
@@ -138,7 +147,12 @@ dependencies {
     implementation "com.squareup.retrofit2:retrofit:2.9.0"
     implementation "com.squareup.retrofit2:converter-gson:2.9.0"
 
-    // testing
+    // truth (fluent assertions for testing)
+    // Ref: https://truth.dev/
+    testImplementation "com.google.truth:truth:1.1.3"
+    androidTestImplementation "com.google.truth:truth:1.1.3"
+
+    // general testing
     // Ref: https://junit.org/junit4/
     // Ref: https://developer.android.com/training/testing/fundamentals
     // Ref: https://developer.android.com/training/testing/espresso
