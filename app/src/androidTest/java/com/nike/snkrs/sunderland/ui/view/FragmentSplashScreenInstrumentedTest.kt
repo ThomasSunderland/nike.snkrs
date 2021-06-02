@@ -11,6 +11,7 @@ package com.nike.snkrs.sunderland.ui.view
 //region import directives
 
 import androidx.fragment.app.testing.launchFragmentInContainer
+import androidx.lifecycle.Lifecycle
 import androidx.navigation.Navigation
 import androidx.navigation.testing.TestNavHostController
 import androidx.test.core.app.ApplicationProvider
@@ -19,7 +20,6 @@ import com.google.common.truth.Truth.assertThat
 import com.nike.snkrs.sunderland.R
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -48,7 +48,6 @@ class FragmentSplashScreenInstrumentedTest {
         // given
         // create a navigation controller for testing screen transitions
         val testNavController = TestNavHostController(ApplicationProvider.getApplicationContext())
-        val splashScreenTransitionDelay = Duration.seconds(1)
 
         // create a graphical FragmentScenario for the SplashScreen
         val splashScreenScenario = launchFragmentInContainer<FragmentSplashScreen>()
@@ -58,13 +57,11 @@ class FragmentSplashScreenInstrumentedTest {
 
             // make the NavController available via the findNavController() APIs
             Navigation.setViewNavController(fragment.requireView(), testNavController)
-
-            // ensure the transition occurs
-            launch { fragment.screenTransitionWithDelay(splashScreenTransitionDelay) }
         }
 
         // when (wait for the splash screen to auto-transition)
-        delay(splashScreenTransitionDelay.plus(Duration.seconds(1)))
+        splashScreenScenario.moveToState(Lifecycle.State.STARTED)
+        delay(FragmentSplashScreen.SPLASH_SCREEN_DURATION_SECONDS.plus(Duration.milliseconds(500)))
 
         // then
         assertThat(testNavController.currentDestination?.id).isEqualTo(R.id.fragmentSneakers)

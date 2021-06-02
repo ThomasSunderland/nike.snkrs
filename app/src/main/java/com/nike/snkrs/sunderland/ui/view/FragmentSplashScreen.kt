@@ -42,7 +42,8 @@ class FragmentSplashScreen : Fragment(), CoroutineScope {
         /**
          * Number of seconds to display the splash screen before proceeding to the next screen
          */
-        private val SPLASH_SCREEN_DURATION_SECONDS = Duration.seconds(3)
+        @VisibleForTesting
+        val SPLASH_SCREEN_DURATION_SECONDS = Duration.seconds(3)
         //endregion constants
     }
     //endregion companion object
@@ -93,13 +94,15 @@ class FragmentSplashScreen : Fragment(), CoroutineScope {
             super.onStart()
 
             // hide app bar, bottom navigation on start
-            with(activity as ActivityMain) {
-                supportActionBar?.hide()
-                viewBinding.bottomNavigationView.visibility = View.GONE
+            if (activity is ActivityMain) {
+                with(activity as ActivityMain) {
+                    supportActionBar?.hide()
+                    viewBinding.bottomNavigationView.visibility = View.GONE
+                }
             }
 
             // wait a bit and then navigate to the sneakers fragment
-            navigateAfterDelayRoutine = launch {
+            navigateAfterDelayRoutine = launch(Dispatchers.Default) {
                 screenTransitionWithDelay(SPLASH_SCREEN_DURATION_SECONDS)
             }
         })

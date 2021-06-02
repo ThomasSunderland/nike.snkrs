@@ -27,10 +27,10 @@ android {
         targetSdkVersion 30
 
         // note: increment on each release
-        versionCode 2
+        versionCode 3
 
-        // versioning scheme: major.year.month.hotfix
-        versionName "1.21.6.0"
+        // versioning scheme: major.year.month.release/hotfix
+        versionName "1.21.6.1"
 
         // ui test runner
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
