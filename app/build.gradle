@@ -27,10 +27,10 @@ android {
         targetSdkVersion 30
 
         // note: increment on each release
-        versionCode 3
+        versionCode 4
 
         // versioning scheme: major.year.month.release/hotfix
-        versionName "1.21.6.1"
+        versionName "1.21.6.2"
 
         // ui test runner
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
@@ -140,6 +140,10 @@ dependencies {
     // lottie
     // Ref: https://github.com/airbnb/lottie-android
     implementation "com.airbnb.android:lottie:3.7.0"
+
+    // recyclerView animations
+    // Ref: https://github.com/wasabeef/recyclerview-animators
+    implementation "jp.wasabeef:recyclerview-animators:4.0.2"
 
     // retrofit (http client for restful api integration)
     // Ref: https://github.com/square/retrofit

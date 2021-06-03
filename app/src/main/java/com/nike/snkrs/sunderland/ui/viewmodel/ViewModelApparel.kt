@@ -37,10 +37,30 @@ class ViewModelApparel : ViewModelBase() {
     //region properties
 
     /**
-     * Collection of observable apparel data
+     * Collection of observable apparel data (combined local + remote data)
      * Note: 5000ms recommendation is from Google to handle screen rotations, etc.
      */
-    val apparel = model.apparel.stateIn(
+    val apparel = model.combinedData.stateIn(
+        scope = viewModelScope,
+        started = SharingStarted.WhileSubscribed(5000),
+        initialValue = listOf()
+    )
+
+    /**
+     * Collection of observable apparel data (local)
+     * Note: 5000ms recommendation is from Google to handle screen rotations, etc.
+     */
+    val localApparelData = model.localData.stateIn(
+        scope = viewModelScope,
+        started = SharingStarted.WhileSubscribed(5000),
+        initialValue = listOf()
+    )
+
+    /**
+     * Collection of observable apparel data (remote)
+     * Note: 5000ms recommendation is from Google to handle screen rotations, etc.
+     */
+    val remoteApparelData = model.remoteData.stateIn(
         scope = viewModelScope,
         started = SharingStarted.WhileSubscribed(5000),
         initialValue = listOf()

@@ -6,9 +6,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     app:cardBackgroundColor="@color/nike_black"
-    app:cardCornerRadius="@dimen/card_corner_radius"
+    app:cardCornerRadius="@dimen/card_local_data_corner_radius"
     app:cardElevation="@dimen/card_elevation"
-    app:contentPadding="@dimen/card_padding">
+    app:contentPadding="@dimen/card_local_data_padding">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"

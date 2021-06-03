@@ -2,9 +2,12 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
 
     <!-- general card-related dimensions -->
-    <dimen name="card_corner_radius">12dp</dimen>
     <dimen name="card_elevation">4dp</dimen>
-    <dimen name="card_padding">12dp</dimen>
+    <dimen name="card_corner_radius">12dp</dimen>
+    <dimen name="card_local_data_corner_radius">12dp</dimen>
+    <dimen name="card_local_data_padding">12dp</dimen>
+    <dimen name="card_remote_data_corner_radius">4dp</dimen>
+    <dimen name="card_remote_data_padding">4dp</dimen>
 
     <!-- bottom navigation dimensions -->
     <dimen name="bottom_navigation_text_size">14sp</dimen>
@@ -13,8 +16,12 @@
     <dimen name="design_bottom_navigation_active_item_max_width" tools:override="true">600dp</dimen>
 
     <!-- general dimensions -->
-    <dimen name="general_view_pager_paddingTopBottom">5dp</dimen>
-    <dimen name="general_view_pager_paddingStartEnd">5dp</dimen>
+    <dimen name="general_recycler_view_height">120dp</dimen>
+    <dimen name="general_recycler_view_marginTop">12dp</dimen>
+    <dimen name="general_recycler_view_marginBottom">4dp</dimen>
+    <dimen name="general_recycler_view_paddingStartEnd">4dp</dimen>
+    <dimen name="general_view_pager_paddingTopBottom">4dp</dimen>
+    <dimen name="general_view_pager_paddingStartEnd">4dp</dimen>
     <dimen name="general_view_pager_page_margin">10dp</dimen>
     <dimen name="general_view_pager_page_offset">10dp</dimen>
     <dimen name="general_view_pager_multiplier" tools:ignore="PxUsage">7.5px</dimen>

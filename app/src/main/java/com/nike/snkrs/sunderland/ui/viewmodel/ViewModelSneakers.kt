@@ -37,10 +37,30 @@ class ViewModelSneakers : ViewModelBase() {
     //region properties
 
     /**
-     * Collection of observable sneakers data
+     * Collection of observable sneakers data (local + remote)
      * Note: 5000ms recommendation is from Google to handle screen rotations, etc.
      */
-    val sneakers = model.sneakers.stateIn(
+    val sneakers = model.combinedData.stateIn(
+        scope = viewModelScope,
+        started = SharingStarted.WhileSubscribed(5000),
+        initialValue = listOf()
+    )
+
+    /**
+     * Collection of observable sneakers data (local)
+     * Note: 5000ms recommendation is from Google to handle screen rotations, etc.
+     */
+    val localSneakersData = model.localData.stateIn(
+        scope = viewModelScope,
+        started = SharingStarted.WhileSubscribed(5000),
+        initialValue = listOf()
+    )
+
+    /**
+     * Collection of observable sneakers data (remote)
+     * Note: 5000ms recommendation is from Google to handle screen rotations, etc.
+     */
+    val remoteSneakersData = model.remoteData.stateIn(
         scope = viewModelScope,
         started = SharingStarted.WhileSubscribed(5000),
         initialValue = listOf()

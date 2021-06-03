@@ -19,6 +19,7 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
 import com.nike.snkrs.sunderland.R
@@ -26,6 +27,7 @@ import com.nike.snkrs.sunderland.databinding.FragmentAthletesBinding
 import com.nike.snkrs.sunderland.ui.viewmodel.ViewModelAthletes
 import com.nike.snkrs.sunderland.util.tryCatch
 import com.nike.snkrs.sunderland.util.tryCatchWithLogging
+import jp.wasabeef.recyclerview.animators.ScaleInRightAnimator
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
@@ -98,6 +100,10 @@ class FragmentAthletes : Fragment(), CoroutineScope {
      */
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         tryCatchWithLogging({
+            // configure our recycler view which presents remote data
+            configureRecyclerView()
+
+            // configure our view pager which presents local data
             configureViewPager()
 
             // fade the shimmer effect out
@@ -122,14 +128,64 @@ class FragmentAthletes : Fragment(), CoroutineScope {
     //region private methods
 
     /**
+     * Configures our recycler view (remote data)
+     */
+    private fun configureRecyclerView() {
+        //@formatter:off
+        tryCatchWithLogging({
+            with (binding.remoteData) {
+                // use a linear layout manager (horizontal orientation)
+                layoutManager = LinearLayoutManager(requireContext(),
+                    LinearLayoutManager.HORIZONTAL, false)
+
+                // initialize the adapter with an empty data set
+                adapter = AdapterRemoteData(viewModel).apply {
+                    registerAdapterDataObserver(object : RecyclerView.AdapterDataObserver() {
+                        override fun onItemRangeInserted(positionStart: Int, itemCount: Int) {
+                            tryCatch {
+                                if (currentList.isNotEmpty()) {
+                                    if (viewModel.firstTimeThrough.value == true) {
+                                        // update current item to be at the middle of the current collection of items
+                                        viewModel.firstTimeThrough.value = false
+                                        //scrollToPosition(getItemCount() / 2)
+                                    } else {
+                                        // ensure that we present the last item viewed
+                                        //scrollToPosition(viewModel.currentRecyclerViewPosition.value ?: 0)
+                                    }
+                                }
+                            }
+                        }
+                    })
+                }
+
+                // item animator
+                itemAnimator = ScaleInRightAnimator().apply {
+                    addDuration = 350 // default 120
+                    removeDuration = 350 // default 120
+                }
+
+                // observe remote data changes
+                viewLifecycleOwner.lifecycleScope.launch {
+                    viewLifecycleOwner.lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                        viewModel.remoteAthletesData.collectLatest { athletesData ->
+                            (adapter as AdapterRemoteData).submitList(athletesData.map { AdapterRemoteDataItem(it.uid, it.resource, it.source) })
+                        }
+                    }
+                }
+            }
+        })
+        //@formatter:on
+    }
+
+    /**
      * Configures our view pager
      */
     private fun configureViewPager() {
         //@formatter:off
         tryCatchWithLogging({
-            with (binding.foregroundViewPager) {
+            with (binding.localData) {
                 // initialize the adapter with an empty data set
-                adapter = AdapterData(viewModel).apply {
+                adapter = AdapterLocalData(viewModel).apply {
                     registerAdapterDataObserver(object : RecyclerView.AdapterDataObserver() {
                         override fun onItemRangeInserted(positionStart: Int, itemCount: Int) {
                             tryCatch {
@@ -140,7 +196,7 @@ class FragmentAthletes : Fragment(), CoroutineScope {
                                         setCurrentItem(getItemCount() / 2, false)
                                     } else {
                                         // ensure that we present the last item viewed
-                                        setCurrentItem(viewModel.currentPosition.value ?: 0, false)
+                                        setCurrentItem(viewModel.currentViewPagerPosition.value ?: 0, false)
                                     }
                                 }
                             }
@@ -163,15 +219,15 @@ class FragmentAthletes : Fragment(), CoroutineScope {
                 // update view model as page changes so that if we go back to this fragment the last page can be restored
                 registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
                     override fun onPageSelected(position: Int) {
-                        viewModel.currentPosition.value = position
+                        viewModel.currentViewPagerPosition.value = position
                     }
                 })
 
-                // observe athletes data changes
+                // observe local data changes
                 viewLifecycleOwner.lifecycleScope.launch {
                     viewLifecycleOwner.lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
-                        viewModel.athletes.collectLatest { athletesData ->
-                            (adapter as AdapterData).submitList(athletesData.map { AdapterDataItem(it.uid, it.resource, it.source) })
+                        viewModel.localAthletesData.collectLatest { athletesData ->
+                            (adapter as AdapterLocalData).submitList(athletesData.map { AdapterLocalDataItem(it.uid, it.resource, it.source) })
                         }
                     }
                 }

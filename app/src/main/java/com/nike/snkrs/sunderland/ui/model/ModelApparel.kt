@@ -40,19 +40,19 @@ class ModelApparel private constructor() {
     //endregion companion object
 
 
-    //region data members
+    //region properties
 
     /**
      * Local apparel data from our pre-loaded Room database
      */
-    private val localData = EntityDatabase.getInstance(App.appContext).apparelDao().queryAll()
+    val localData = EntityDatabase.getInstance(App.appContext).apparelDao().queryAll()
 
     /**
      * Remote apparel data from our call to the Unsplash service
      * Note: data does not always seem to exactly match our search params
      */
     //@formatter:off
-    private val remoteData: Flow<List<Apparel>> = flow {
+    val remoteData: Flow<List<Apparel>> = flow {
         // retrieve (and wait for) the unsplash service developer access key from firebase config
         var accessKey = ""
         App.config.fetchAndActivate().addOnCompleteListener {
@@ -64,16 +64,12 @@ class ModelApparel private constructor() {
     }.map { results -> results.map { result -> Apparel(resource = result.urls.regular, source = result.user.name) }
     }.flowOn(Dispatchers.IO)
     //@formatter:on
-    //endregion data members
-
-
-    //region properties
 
     /**
-     * Observable collection of apparel data
+     * Observable collection of apparel data (local + remote)
      */
     //@formatter:off
-    val apparel: Flow<List<Apparel>>
+    val combinedData: Flow<List<Apparel>>
         get() = localData.combine(remoteData) { local, remote -> local + remote }
     //@formatter:on
     //endregion properties

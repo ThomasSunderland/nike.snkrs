@@ -8,19 +8,18 @@
 package com.nike.snkrs.sunderland.ui.view
 
 /**
- * Encapsulates the data used for display by our AdapterData class
- * @author Thomas Sunderland. 2021 MAY 14
+ * Encapsulates a piece of local data used for display by our local adapter class (AdapterLocalData)
+ * @author Thomas Sunderland. 2021 JUN 02
  */
-data class AdapterDataItem(
+data class AdapterLocalDataItem(
+
     /**
      * Unique identifier
      */
     val id: Int,
 
     /**
-     * Resource, could be a local drawable resource received from a Room query or it could be
-     * a link to a remote resource (client to perform check to determine which it is)
-     * Note: could add a type to make this clearer, but time is short
+     * Local drawable resource received from a Room query
      */
     val resource: String,
 

@@ -37,10 +37,30 @@ class ViewModelAthletes : ViewModelBase() {
     //region properties
 
     /**
-     * Collection of observable athletes data
+     * Collection of observable athletes data (combined local + remote)
      * Note: 5000ms recommendation is from Google to handle screen rotations, etc.
      */
-    val athletes = model.athletes.stateIn(
+    val athletes = model.combinedData.stateIn(
+        scope = viewModelScope,
+        started = SharingStarted.WhileSubscribed(5000),
+        initialValue = listOf()
+    )
+
+    /**
+     * Collection of observable athletes data (local)
+     * Note: 5000ms recommendation is from Google to handle screen rotations, etc.
+     */
+    val localAthletesData = model.localData.stateIn(
+        scope = viewModelScope,
+        started = SharingStarted.WhileSubscribed(5000),
+        initialValue = listOf()
+    )
+
+    /**
+     * Collection of observable athletes data (remote)
+     * Note: 5000ms recommendation is from Google to handle screen rotations, etc.
+     */
+    val remoteAthletesData = model.remoteData.stateIn(
         scope = viewModelScope,
         started = SharingStarted.WhileSubscribed(5000),
         initialValue = listOf()

@@ -26,9 +26,14 @@ abstract class ViewModelBase : ViewModel(), AdapterDataCallback {
     //region properties
 
     /**
+     * Stores the current position of the recycler view
+     */
+    val currentRecyclerViewPosition = MutableLiveData(0)
+
+    /**
      * Stores the current position of the view pager
      */
-    val currentPosition = MutableLiveData(0)
+    val currentViewPagerPosition = MutableLiveData(0)
 
     /**
      * Flag indicating whether or not this is the first time this fragment has been displayed

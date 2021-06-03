@@ -67,19 +67,30 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <!-- view pager -->
-        <androidx.viewpager2.widget.ViewPager2
-            android:id="@+id/foregroundViewPager"
+        <!-- recycler view for presenting remote data -->
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/remoteData"
             android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:clipToPadding="false"
-            android:paddingStart="@dimen/general_view_pager_paddingStartEnd"
-            android:paddingTop="@dimen/general_view_pager_paddingTopBottom"
-            android:paddingEnd="@dimen/general_view_pager_paddingStartEnd"
-            android:paddingBottom="@dimen/general_view_pager_paddingTopBottom"
-            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_height="@dimen/general_recycler_view_height"
+            android:layout_marginTop="@dimen/general_recycler_view_marginTop"
+            android:layout_marginBottom="@dimen/general_recycler_view_marginBottom"
+            android:background="@android:color/transparent"
+            android:paddingStart="@dimen/general_recycler_view_paddingStartEnd"
+            android:paddingEnd="@dimen/general_recycler_view_paddingStartEnd"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
+
+        <!-- view pager for presenting local data -->
+        <androidx.viewpager2.widget.ViewPager2
+            android:id="@+id/localData"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:paddingStart="@dimen/general_view_pager_paddingStartEnd"
+            android:paddingEnd="@dimen/general_view_pager_paddingStartEnd"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/remoteData" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
